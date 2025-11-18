@@ -6,24 +6,27 @@ def find_all_starts(seq):
     return starts
 
 
-def find_first_in_register_stop(seq, start_index):
+def find_first_in_register_stop(seq):
     stop_codons = {"TGA", "TAG", "TAA"}
-    
-    for i in range(start_index + 3, len(seq), 3):
-        codon = seq[i:i+3]
-        if codon in stop_codons:
+    for i in range(0, len(seq), 3):
+        if seq[i:i+3] in stop_codons:
             return i
     return -1
 
 
 def all_orfs_range(seq):
-    orfs = []
+    stop_codons = {"TGA", "TAG", "TAA"}
     starts = find_all_starts(seq)
-    
+    orfs = []
+
     for start in starts:
-        stop = find_first_in_register_stop(seq, start)
-        if stop != -1:
-            orfs.append((start, stop + 3))
+        # scan forward in register from this start
+        for i in range(start + 3, len(seq), 3):
+            codon = seq[i:i+3]
+            if codon in stop_codons:
+                orfs.append((start, i + 3))
+                break
+
     return orfs
 
 
@@ -31,7 +34,5 @@ def longest_orf(seq):
     orfs = all_orfs_range(seq)
     if not orfs:
         return ""
-    
-    longest = max(orfs, key=lambda x: x[1] - x[0])
-    start, stop = longest
+    start, stop = max(orfs, key=lambda x: x[1] - x[0])
     return seq[start:stop]
