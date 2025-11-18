@@ -7,14 +7,12 @@ def find_all_starts(seq):
 
 def find_first_in_register_stop(seq):
     stop_codons = {"TGA", "TAG", "TAA"}
-    start = seq.find("ATG")
-    if start == -1:
-        return -1
-    for i in range(start + 3, len(seq) - 2):
+    for i in range(len(seq) - 2):
         if seq[i:i+3] in stop_codons:
-            if (i - start) % 3 == 0:
-                return i + 3
+            if i % 3 == 0:
+                return i
     return -1
+
 
 def all_orfs_range(seq):
     orfs = []
