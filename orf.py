@@ -26,7 +26,8 @@ def all_orfs_range(seq):
     return orfs
 
 def longest_orf(seq):
-    orfs = all_orfs_range(seq)
+    seq_upper = seq.upper()
+    orfs = all_orfs_range(seq_upper)
     if not orfs:
         return ""
     start, stop = max(orfs, key=lambda x: x[1] - x[0])
