@@ -10,8 +10,9 @@ def find_first_in_register_stop(seq):
     for i in range(len(seq) - 2):
         if seq[i:i+3] in stop_codons:
             if i % 3 == 0:
-                return i
+                return i + 3
     return -1
+
 
 def all_orfs_range(seq):
     orfs = []
