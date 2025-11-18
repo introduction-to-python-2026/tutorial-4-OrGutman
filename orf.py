@@ -20,7 +20,6 @@ def all_orfs_range(seq):
     orfs = []
 
     for start in starts:
-        # scan forward in register from this start
         for i in range(start + 3, len(seq), 3):
             codon = seq[i:i+3]
             if codon in stop_codons:
